@@ -2,6 +2,7 @@ package observer.headfirst.example;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 
 /**
  * Created by Dasha on 21.02.15.
@@ -11,16 +12,8 @@ public class StatisticsConditionsDisplay extends WeatherObserverImpl {
     private List<Float> humidityStatistics = new ArrayList<Float>();
     private List<Float> pressureStatistics = new ArrayList<Float>();
 
-    public StatisticsConditionsDisplay(WeatherDataObject subject) {
-        super(subject);
-    }
-
-    @Override
-    public void update() {
-        temperatureStatistics.add(subject.getTemperature());
-        humidityStatistics.add(subject.getHumidity());
-        pressureStatistics.add(subject.getPressure());
-        display();
+    public StatisticsConditionsDisplay(Observable observable) {
+        super(observable);
     }
 
     public void display() {
@@ -43,6 +36,17 @@ public class StatisticsConditionsDisplay extends WeatherObserverImpl {
                 }
             }
             System.out.println();
+        }
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        if(o instanceof WeatherDataObject){
+            WeatherDataObject subject = (WeatherDataObject) o;
+            temperatureStatistics.add(subject.getTemperature());
+            humidityStatistics.add(subject.getHumidity());
+            pressureStatistics.add(subject.getPressure());
+            display();
         }
     }
 }

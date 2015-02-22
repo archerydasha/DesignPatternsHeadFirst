@@ -1,8 +1,6 @@
 package observer.headfirst.example;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -34,11 +32,9 @@ public class WeatherDataObject implements Subject {
     @Override
     public void notifyAllObservers() {
         for(WeatherObserver observer : observers){
-            observer.update(temperature, humidity, pressure);
+            observer.update();
         }
     }
-
-
 
     public float getPressure() {
         return pressure;
